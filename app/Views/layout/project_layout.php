@@ -10,20 +10,29 @@
 </head>
 
 <body id="page-top">
-    <!-- Navigation-->
-    <nav class="navbar fixed-bottom navbar-light bg-dark">
-        <a class="navbar-brand" href="<?= site_url() ?>">Terima</a>
-
-        <div class="collapse navbar-collapse" id="navbars">
-
-            <?= $this->renderSection('navbar') ?>
-
+    <div class="container-lg">
+        <div class="row align-items-center justify content-center">
+            <div class="col">
+                <h1 class="text-center font-weight-bold text-info">Terima</h1>
+            </div>
         </div>
-    </nav>
-    <!-- Main-->
-    <?= $this->renderSection('main') ?>
-    <!-- Footer-->
-    <?= $this->renderSection('footerAssets') ?>
+        <div class="row align-items-center justify content-center">
+            <div class="col">
+                <!-- Main-->
+                <?= $this->renderSection('main') ?>
+            </div>
+        </div>
+    </div>
+    <!-- Navigation-->
+    <div>
+        <nav class="navbar navbar-expand navbar-dark bg-info fixed-bottom">
+            <div class="nav navbar-nav nav-justified w-100">
+                <a class="nav-item nav-link" href="/"><i class="fa-solid fa-house"></i></a>
+                <a class="nav-item nav-link" href="/add"><i class="fa-solid fa-circle-plus"></i></a>
+                <a class="nav-item nav-link" href="/profil"><i class="fa-solid fa-user"></i></a>
+            </div>
+        </nav>
+    </div>
 </body>
 
 <body>
