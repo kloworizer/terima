@@ -10,13 +10,18 @@
 </head>
 
 <body id="page-top">
-    <div class="container-lg">
-        <div class="row align-items-center justify content-center">
-            <div class="col">
-                <h1 class="text-center font-weight-bold text-info">Terima</h1>
+    <!-- Navigation-->
+    <div>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-info sticky-top">
+            <div class="nav navbar-nav nav-justified w-100">
+                <div class="input-group rounded">
+                    <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                </div>
             </div>
-        </div>
-        <div class="row align-items-center justify content-center">
+        </nav>
+    </div>
+    <div class="container-lg">
+        <div class="row align-items-center justify content-center mx-1 mt-4">
             <div class="col">
                 <!-- Main-->
                 <?= $this->renderSection('main') ?>
@@ -24,15 +29,7 @@
         </div>
     </div>
     <!-- Navigation-->
-    <div>
-        <nav class="navbar navbar-expand navbar-dark bg-info fixed-bottom">
-            <div class="nav navbar-nav nav-justified w-100">
-                <a class="nav-item nav-link" href="/"><i class="fa-solid fa-house"></i></a>
-                <a class="nav-item nav-link" href="/add"><i class="fa-solid fa-circle-plus"></i></a>
-                <a class="nav-item nav-link" href="/profil"><i class="fa-solid fa-user"></i></a>
-            </div>
-        </nav>
-    </div>
+    <?= $this->include('layout/navbar') ?>
 </body>
 
 <body>
