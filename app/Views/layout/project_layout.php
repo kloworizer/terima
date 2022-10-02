@@ -15,7 +15,7 @@
         <nav class="navbar navbar-expand-lg navbar-dark bg-info sticky-top">
             <div class="nav navbar-nav nav-justified w-100">
                 <div class="input-group rounded">
-                    <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                    <input type="search" class="form-control rounded" placeholder="Cari.." aria-label="Search" aria-describedby="search-addon" />
                 </div>
             </div>
         </nav>
