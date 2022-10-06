@@ -23,9 +23,6 @@
     </div>
 </div>
 
-<div class="row">
-
-</div>
 <div class="card my-4">
     <div class="card-header">
         Ubah password
