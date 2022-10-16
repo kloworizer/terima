@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 use CodeIgniter\I18n\Time;
-use Config\Services;
+use Irsyadulibad\DataTables\DataTables;
 
 class Terima extends BaseController
 {
@@ -30,6 +30,7 @@ class Terima extends BaseController
                     'nama_pengirim' => $this->request->getPost('nama_pengirim'),
                     'email_pengirim' => $this->request->getPost('email_pengirim'),
                     'hp_pengirim' => $this->request->getPost('hp_pengirim'),
+                    'id_penerima' => auth()->id(),
                     'keterangan' => $this->request->getPost('keterangan'),
                     'status' => '2',
                     'tanggal' => Time::now('Asia/Jakarta', 'id_ID'),
@@ -73,5 +74,13 @@ class Terima extends BaseController
         }
 
         return view('tambah', $data);
+    }
+
+    public function riwayat($userId)
+    {
+        return DataTables::use('tanda_terima')
+            ->where(['id_penerima' => $userId])
+            ->select('no_terima, nama_pengirim')
+            ->make();
     }
 }

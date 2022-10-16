@@ -22,9 +22,33 @@
 <div class="card my-4">
 	<div class="card-header text-center">
 		<h2>Riwayat tanda <span class="text-info">Terima</span></h2>
+		<table id="riwayat">
+			<thead>
+				<tr>
+					<th>No Terima</th>
+					<th>Nama Pengirim</th>
+				</tr>
+			</thead>
+		</table>
 	</div>
 	<div class="card-body p-3">
-		
+
+	</div>
 </div>
+
+<script>
+	$(document).ready(function() {
+		var userID = <?= auth()->id() ?>;
+		$('#riwayat').DataTable({
+			processing: true,
+			serverSide: true,
+			ajax: 'riwayat/' + userID,
+			columns: [
+				{data: 'no_terima', name: 'no_terima'},
+				{data: 'nama_pengirim', name: 'nama_pengirim'},
+			]
+		});
+	});
+</script>
 
 <?= $this->endSection() ?>

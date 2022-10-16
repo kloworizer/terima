@@ -37,6 +37,7 @@ $routes->set404Override();
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
 $routes->match(['get', 'post'], '/add', 'Terima::tambah');
+$routes->get('/riwayat/(:segment)', 'Terima::riwayat/$1');
 $routes->get('/profil', 'Profil::index');
 
 service('auth')->routes($routes);
