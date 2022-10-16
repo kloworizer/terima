@@ -23,6 +23,9 @@
     <div class="container-lg">
         <div class="row align-items-center justify content-center mx-1 mt-4">
             <div class="col">
+                <aside>
+                    {alerts}
+                </aside>
                 <!-- Main-->
                 <?= $this->renderSection('main') ?>
             </div>
@@ -31,8 +34,13 @@
     <!-- Navigation-->
     <?= $this->include('layout/navbar') ?>
 </body>
-
-<body>
-</body>
-
+<script>
+    $(document).ready(function() {
+        window.setTimeout(function() {
+            $(".alert").fadeTo(500, 0).slideUp(500, function(){
+                $(this).remove();
+            });
+        }, 4000);
+    });    
+</script>
 </html>

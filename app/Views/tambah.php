@@ -4,21 +4,19 @@
 <div class="card my-4">
     <div class="card-header text-center">
         <h2>Buat tanda <span class="text-info">Terima</span></h2>
-        <?= session()->getFlashdata('error') ?>
-        <?= service('validation')->listErrors() ?>
     </div>
     <div class="card-body p-3">
         <div class="row">
             <div class="col">
-                <form action="/add" method="post">
+                <form action="/add" method="post" enctype="multipart/form-data">
                     <?= csrf_field() ?>
                     <div class="form-group">
                         <label for="nama_pengirim">Telah diterima dari</label>
-                        <input type="text" class="form-control" name="nama_pengirim" id="nama_pengirim" aria-describedby="helpId" placeholder="Nama pengirim">
+                        <input type="text" class="form-control" name="nama_pengirim" value="<?= old('nama_pengirim'); ?>" id="nama_pengirim" aria-describedby="helpId" placeholder="Nama pengirim" required>
                         <label for="email_pengirim">Email</label>
-                        <input type="text" class="form-control" name="email_pengirim" id="email_pengirim" aria-describedby="helpId" placeholder="Email pengirim">
+                        <input type="text" class="form-control" name="email_pengirim" value="<?= old('email_pengirim'); ?>" id="email_pengirim" aria-describedby="helpId" placeholder="Email pengirim" type="email" required>
                         <label for="hp_pengirim">HP</label>
-                        <input type="text" class="form-control" name="hp_pengirim" id="hp_pengirim" aria-describedby="helpId" placeholder="HP Pengirim">
+                        <input type="text" class="form-control" name="hp_pengirim" value="<?= old('hp_pengirim'); ?>" id="hp_pengirim" aria-describedby="helpId" placeholder="HP Pengirim" required>
                         <label for="keterangan">Berupa</label>
                         <textarea class="form-control" name="keterangan" id="keterangan" rows="3" placeholder="Uraian singkat / keterangan barang yang diterima"></textarea>
                     </div>
@@ -36,8 +34,9 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label>Unggah foto barang :</label>
-
+                        <label for="images">Unggah foto barang :</label>
+                        <input type="file" class="form-control-file" name="images[]" id="images" multiple="" placeholder="" aria-describedby="fileHelpId" accept="image/*">
+                        <small id="fileHelpId" class="form-text text-muted">ekstensi file .jpg, .png</small>
                     </div>
                     <button type="submit" class="btn btn-info">Simpan</button>
                     <button type="reset" class="btn btn-secondary">Reset</button>
@@ -49,9 +48,9 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-        var maxField = 20; //Input fields increment limitation
-        var addButton = $('.add_button'); //Add button selector
-        var wrapper = $('.terima-items'); //Input field wrapper
+        var maxField = 20;
+        var addButton = $('.add_button');
+        var wrapper = $('.terima-items');
         var fieldHTML = `<div class="input-group">
                             <input type="text" class="form-control" name="nama_barang[]" id="nama_barang" aria-describedby="helpId" placeholder="Nama barang">
                             <input type="text" class="form-control" name="jumlah_barang[]" id="jumlah_barang" aria-describedby="helpId" placeholder="Jumlah barang">
@@ -62,22 +61,19 @@
                                 </span>
                             </div>
                         </div>`;
-        var x = 1; //Initial field counter is 1
+        var x = 1;
 
-        //Once add button is clicked
         $(addButton).click(function() {
-            //Check maximum number of input fields
             if (x < maxField) {
-                x++; //Increment field counter
-                $(wrapper).append(fieldHTML); //Add field html
+                x++;
+                $(wrapper).append(fieldHTML);
             }
         });
 
-        //Once remove button is clicked
         $(wrapper).on('click', '.remove_button', function(e) {
             e.preventDefault();
-            $(this).parent().parent().parent('div').remove(); //Remove field html
-            x--; //Decrement field counter
+            $(this).parent().parent().parent('div').remove();
+            x--;
         });
     });
 </script>

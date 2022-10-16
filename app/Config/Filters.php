@@ -41,6 +41,7 @@ class Filters extends BaseConfig
         'after' => [
             'toolbar',
             'assets',
+            'alerts',
             // 'honeypot',
             // 'secureheaders',
         ],
