@@ -26,7 +26,16 @@ class Terima extends BaseController
             ])) {
                 return redirect()->back()->withInput()->with('error', $this->validator->listErrors());
             } else {
+
+                $db = db_connect();
+
+                $queryMaxNo = $db->query('select cast(max(left(no_terima,5)) as unsigned) no_terima from tanda_terima');
+                $maxNo = $queryMaxNo->getRow()->no_terima;
+                $maxNo = str_pad($maxNo + 1,5,"0",STR_PAD_LEFT);
+                $maxNo = strval($maxNo) . "/" . strval(date('Y'));
+
                 $tandaTerima->insert([
+                    'no_terima' => $maxNo,
                     'nama_pengirim' => $this->request->getPost('nama_pengirim'),
                     'email_pengirim' => $this->request->getPost('email_pengirim'),
                     'hp_pengirim' => $this->request->getPost('hp_pengirim'),
@@ -80,7 +89,7 @@ class Terima extends BaseController
     {
         return DataTables::use('tanda_terima')
             ->where(['id_penerima' => $userId])
-            ->select('no_terima, nama_pengirim')
+            ->select('no_terima, tanggal, nama_pengirim, keterangan, status')
             ->make();
     }
 }

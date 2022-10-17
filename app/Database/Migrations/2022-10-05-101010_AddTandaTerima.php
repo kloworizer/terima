@@ -27,7 +27,7 @@ class AddTandaTerima extends Migration
                 'constraint'     => 11,
             ],
             'tanggal' => [
-                'type'           => 'TIMESTAMP',
+                'type'           => 'DATETIME',
             ],
             'nama_pengirim' => [
                 'type'       => 'VARCHAR',

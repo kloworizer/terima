@@ -22,11 +22,14 @@
 <div class="card my-4">
 	<div class="card-header text-center">
 		<h2>Riwayat tanda <span class="text-info">Terima</span></h2>
-		<table id="riwayat">
+		<table id="riwayat" class="table table-striped table-bordered display nowrap">
 			<thead>
 				<tr>
 					<th>No Terima</th>
+					<th>Tanggal</th>
 					<th>Nama Pengirim</th>
+					<th>Keterangan</th>
+					<th>Status</th>
 				</tr>
 			</thead>
 		</table>
@@ -45,8 +48,13 @@
 			ajax: 'riwayat/' + userID,
 			columns: [
 				{data: 'no_terima', name: 'no_terima'},
+				{data: 'tanggal', name: 'tanggal'},
 				{data: 'nama_pengirim', name: 'nama_pengirim'},
-			]
+				{data: 'keterangan', name: 'keterangan'},
+				{data: 'status', name: 'status'},
+			],
+			'bLengthChange': false,
+			responsive: true,
 		});
 	});
 </script>

@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $headerTitle ?></title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.min.css">
     <?= $this->renderSection('headerAssets') ?>
 </head>
 
@@ -43,4 +44,5 @@
         }, 4000);
     });    
 </script>
+<script src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.min.js"></script>
 </html>
