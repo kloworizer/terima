@@ -30,6 +30,7 @@
 					<th>Nama Pengirim</th>
 					<th>Keterangan</th>
 					<th>Status</th>
+					<th></th>
 				</tr>
 			</thead>
 		</table>
@@ -42,16 +43,37 @@
 <script>
 	$(document).ready(function() {
 		var userID = <?= auth()->id() ?>;
-		$('#riwayat').DataTable({
+		var riwayat = $('#riwayat').DataTable({
 			processing: true,
 			serverSide: true,
 			ajax: 'riwayat/' + userID,
-			columns: [
-				{data: 'no_terima', name: 'no_terima'},
-				{data: 'tanggal', name: 'tanggal'},
-				{data: 'nama_pengirim', name: 'nama_pengirim'},
-				{data: 'keterangan', name: 'keterangan'},
-				{data: 'status', name: 'status'},
+			columns: [{
+					data: 'no_terima',
+					name: 'no_terima'
+				},
+				{
+					data: 'tanggal',
+					name: 'tanggal'
+				},
+				{
+					data: 'nama_pengirim',
+					name: 'nama_pengirim'
+				},
+				{
+					data: 'keterangan',
+					name: 'keterangan'
+				},
+				{
+					data: 'status',
+					name: 'status'
+				},
+				{
+					data: null,
+					render: (data, type, row) => {
+						return `<a href="lihat/${row.id}"><button class="btn btn-secondary" id="lihat"><i class="fa-solid fa-magnifying-glass"></i> Lihat</button></a>&nbsp;
+								<a href="pdf/${row.id}"><button class="btn btn-secondary" id="pdf"><i class="fa-solid fa-file-pdf"></i> PDF</button></a>`;
+					}
+				},
 			],
 			'bLengthChange': false,
 			responsive: true,
@@ -60,3 +82,4 @@
 </script>
 
 <?= $this->endSection() ?>
+</a>

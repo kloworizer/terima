@@ -89,7 +89,20 @@ class Terima extends BaseController
     {
         return DataTables::use('tanda_terima')
             ->where(['id_penerima' => $userId])
-            ->select('no_terima, tanggal, nama_pengirim, keterangan, status')
+            ->select('id, no_terima, tanggal, nama_pengirim, keterangan, status')
             ->make();
+    }
+
+    public function lihat($id)
+    {
+        $data['headerTitle'] = 'Tanda Terima';
+        $data['logButton'] = 'fa-solid fa-user';
+        $data['logUrl'] = '/profil';
+
+        $tandaTerima = model(TandaTerimaModel::class);
+        $detilTerima = model(DetilTerimaModel::class);
+        $FotoTerima = model(FotoTerimaModel::class);
+
+        return view('lihat', $data);
     }
 }
