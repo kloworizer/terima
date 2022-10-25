@@ -11,11 +11,11 @@
                 <form action="/add" method="post" enctype="multipart/form-data">
                     <?= csrf_field() ?>
                     <div class="form-group">
-                        <label for="nama_pengirim">Telah diterima dari</label>
+                        <label for="nama_pengirim" class="required">Telah diterima dari</label>
                         <input type="text" class="form-control" name="nama_pengirim" value="<?= old('nama_pengirim'); ?>" id="nama_pengirim" aria-describedby="helpId" placeholder="Nama pengirim" required>
-                        <label for="email_pengirim">Email</label>
+                        <label for="email_pengirim" class="required">Email</label>
                         <input type="text" class="form-control" name="email_pengirim" value="<?= old('email_pengirim'); ?>" id="email_pengirim" aria-describedby="helpId" placeholder="Email pengirim" type="email" required>
-                        <label for="hp_pengirim">HP</label>
+                        <label for="hp_pengirim" class="required">HP</label>
                         <input type="text" class="form-control" name="hp_pengirim" value="<?= old('hp_pengirim'); ?>" id="hp_pengirim" aria-describedby="helpId" placeholder="HP Pengirim" required>
                         <label for="keterangan">Berupa</label>
                         <textarea class="form-control" name="keterangan" id="keterangan" rows="3" placeholder="Uraian singkat / keterangan barang yang diterima"></textarea>

@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $headerTitle ?></title>
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.min.css">
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
     <?= $this->renderSection('headerAssets') ?>
 </head>
 
@@ -24,7 +24,7 @@
             </div>
         </nav>
     </div>
-    <div class="container-fluid">
+    <div class="container-xl px-0 mb-5">
         <div class="row align-items-center justify content-center mx-1 mt-4">
             <div class="col">
                 <aside>

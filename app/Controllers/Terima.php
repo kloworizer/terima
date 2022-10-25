@@ -54,12 +54,15 @@ class Terima extends BaseController
                         $jumlahBarang = $this->request->getPost('jumlah_barang');
                         $satuanBarang = $this->request->getPost('satuan_barang');
 
-                        $detilTerima->insert([
-                            'id_terima' => $insert_id,
-                            'uraian' => $namaBarang[$i],
-                            'jumlah' => $jumlahBarang[$i],
-                            'satuan' => $satuanBarang[$i],
-                        ]);
+                        if($namaBarang[$i] != ''){
+                            $detilTerima->insert([
+                                'id_terima' => $insert_id,
+                                'uraian' => $namaBarang[$i],
+                                'jumlah' => $jumlahBarang[$i],
+                                'satuan' => $satuanBarang[$i],
+                            ]);
+                        }
+
                     }
                 }
 
@@ -68,7 +71,7 @@ class Terima extends BaseController
                     foreach ($this->request->getFileMultiple('images') as $file) {
                         if ($file->isValid()) {
                             $newName = $file->getRandomName();
-                            $file->move(WRITEPATH . 'uploads', $newName);
+                            $file->move('../public/uploads', $newName);
                             $FotoTerima->insert([
                                 'id_terima' => $insert_id,
                                 'file_foto' => $newName,
@@ -102,6 +105,22 @@ class Terima extends BaseController
         $tandaTerima = model(TandaTerimaModel::class);
         $detilTerima = model(DetilTerimaModel::class);
         $FotoTerima = model(FotoTerimaModel::class);
+        $users = model('UserModel');
+
+        $dataTandaTerima = $tandaTerima->find($id);
+        $data['dataTandaTerima'] = $dataTandaTerima;
+
+        $dataDetilTerima = $detilTerima->where('id_terima', $id)->findAll();
+        $data['dataDetilTerima'] = $dataDetilTerima;
+
+        $dataFotoTerima = $FotoTerima->where('id_terima', $id)->findAll();
+        $data['dataFotoTerima'] = $dataFotoTerima;
+
+        $id_penerima = $dataTandaTerima['id_penerima'];
+        $user  = $users->findById($id_penerima);
+        
+        $data['nama_penerima'] = $user->username;
+        $data['email_penerima'] = $user->email;
 
         return view('lihat', $data);
     }
