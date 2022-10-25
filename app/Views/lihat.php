@@ -5,8 +5,15 @@
     <div class="card-header text-center">
         <h2>Tanda <span class="text-info">Terima</span></h2>
         <h4><?= $dataTandaTerima['no_terima'] ?></h4>
+        <img src="<?= $qr_code ?>" alt="qr code"></br>
+        <i>scan QC Code untuk mendapatkan versi PDF dari tanda terima ini</i>
     </div>
     <div class="card-body">
+        <div class="row">
+            <div class="col d-flex justify-content-center">
+
+            </div>
+        </div>
         <div class="row">
             <div class="col">
                 <p>Telah diserah terimakan dokumen / barang oleh :</p>
@@ -63,9 +70,10 @@
                     <?php } ?>
                 </div>
             </div>
+        <?php } ?>
     </div>
-<?php } ?>
-
-</div>
+    <div class="card-footer">
+        <i>Tanda terima ini adalah tanda penerimaan yang sah dan telah disetujui oleh pengirim dan penerima.</i>
+    </div>
 </div>
 <?= $this->endSection() ?>

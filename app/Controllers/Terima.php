@@ -4,6 +4,11 @@ namespace App\Controllers;
 
 use CodeIgniter\I18n\Time;
 use Irsyadulibad\DataTables\DataTables;
+use Endroid\QrCode\Builder\Builder;
+use Endroid\QrCode\Encoding\Encoding;
+use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelHigh;
+use Endroid\QrCode\RoundBlockSizeMode\RoundBlockSizeModeMargin;
+use Endroid\QrCode\Writer\PngWriter;
 
 class Terima extends BaseController
 {
@@ -121,6 +126,24 @@ class Terima extends BaseController
         
         $data['nama_penerima'] = $user->username;
         $data['email_penerima'] = $user->email;
+
+        
+
+        $url_code = base_url() . '/pdf/' . password_hash($id.$id_penerima, PASSWORD_BCRYPT);
+
+        $qrcode = Builder::create()
+                ->writer(new PngWriter())
+                ->writerOptions([])
+                ->data($url_code)
+                ->encoding(new Encoding('UTF-8'))
+                ->errorCorrectionLevel(new ErrorCorrectionLevelHigh())
+                ->size(300)
+                ->margin(10)
+                ->roundBlockSizeMode(new RoundBlockSizeModeMargin())
+                ->validateResult(false)
+                ->build();
+
+        $data['qr_code'] = $qrcode->getDataUri();
 
         return view('lihat', $data);
     }
