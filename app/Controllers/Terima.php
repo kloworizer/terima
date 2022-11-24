@@ -127,8 +127,6 @@ class Terima extends BaseController
         $data['nama_penerima'] = $user->username;
         $data['email_penerima'] = $user->email;
 
-        
-
         $url_code = base_url() . '/pdf/' . password_hash($id.$id_penerima, PASSWORD_BCRYPT);
 
         $qrcode = Builder::create()
@@ -146,5 +144,10 @@ class Terima extends BaseController
         $data['qr_code'] = $qrcode->getDataUri();
 
         return view('lihat', $data);
+    }
+
+    public function pdf($id) 
+    {
+
     }
 }
