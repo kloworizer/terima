@@ -39,6 +39,7 @@ $routes->get('/', 'Home::index');
 $routes->match(['get', 'post'], '/add', 'Terima::tambah');
 $routes->get('/riwayat/(:segment)', 'Terima::riwayat/$1');
 $routes->get('/lihat/(:segment)', 'Terima::lihat/$1');
+$routes->get('/pdf/(:segment)', 'Terima::pdf/$1');
 $routes->get('/profil', 'Profil::index');
 
 service('auth')->routes($routes);
