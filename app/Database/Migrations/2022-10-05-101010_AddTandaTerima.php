@@ -41,6 +41,18 @@ class AddTandaTerima extends Migration
                 'type'       => 'VARCHAR',
                 'constraint' => '255',
             ],
+            'nama_penerima' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '255',
+            ],
+            'email_penerima' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '255',
+            ],
+            'hp_penerima' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '255',
+            ],
             'keterangan' => [
                 'type'       => 'VARCHAR',
                 'constraint' => '255',

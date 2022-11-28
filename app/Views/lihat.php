@@ -5,8 +5,7 @@
     <div class="card-header text-center">
         <h2>Tanda <span class="text-info">Terima</span></h2>
         <h4><?= $dataTandaTerima['no_terima'] ?></h4>
-        <img src="<?= $qr_code ?>" alt="qr code"></br>
-        <i>scan QC Code untuk mendapatkan versi PDF dari tanda terima ini</i>
+        <a href="/pdf/<?= $dataTandaTerima['id'] ?>"><button class="btn btn-secondary" id="pdf"><i class="fa-solid fa-file-pdf"></i> PDF</button></a>
     </div>
     <div class="card-body">
         <div class="row">
@@ -16,7 +15,7 @@
         </div>
         <div class="row">
             <div class="col">
-                <p>Telah diserah terimakan dokumen / barang oleh :</p>
+                <p>Telah diserahterimakan dokumen / barang oleh :</p>
             </div>
         </div>
         <div class="row">
@@ -28,9 +27,9 @@
             </div>
             <div class="col-sm-6">
                 <h5>Penerima</h5>
-                <p><?= $nama_penerima ?></br>
-                    <?= $email_penerima ?></br>
-                    <?= $dataTandaTerima['hp_pengirim'] ?></p>
+                <p><?= $dataTandaTerima['nama_penerima'] ?></br>
+                    <?= $dataTandaTerima['email_penerima'] ?></br>
+                    <?= $dataTandaTerima['hp_penerima'] ?></p>
             </div>
         </div>
         <div class="row">
@@ -44,9 +43,9 @@
                 <div class="col">
                     <h5>Rincian barang</h5>
                     <div class="row">
-                        <div class="col-2">No</div>
-                        <div class="col">Rincian Barang</div>
-                        <div class="col">Jumlah</div>
+                        <div class="col-2"><b>No</b></div>
+                        <div class="col"><b>Rincian Barang</b></div>
+                        <div class="col"><b>Jumlah</b></div>
                     </div>
                     <?php for ($i = 0; $i < count($dataDetilTerima); $i++) { ?>
                         <div class="row">

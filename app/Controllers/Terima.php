@@ -10,6 +10,9 @@ use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelHigh;
 use Endroid\QrCode\RoundBlockSizeMode\RoundBlockSizeModeMargin;
 use Endroid\QrCode\Writer\PngWriter;
 
+use Dompdf\Dompdf;
+use Dompdf\Options;
+
 class Terima extends BaseController
 {
     public function tambah()
@@ -21,6 +24,7 @@ class Terima extends BaseController
         $tandaTerima = model(TandaTerimaModel::class);
         $detilTerima = model(DetilTerimaModel::class);
         $FotoTerima = model(FotoTerimaModel::class);
+        $users = model('UserModel');
 
         if ($this->request->getMethod() === 'post') {
 
@@ -36,15 +40,26 @@ class Terima extends BaseController
 
                 $queryMaxNo = $db->query('select cast(max(left(no_terima,5)) as unsigned) no_terima from tanda_terima');
                 $maxNo = $queryMaxNo->getRow()->no_terima;
-                $maxNo = str_pad($maxNo + 1,5,"0",STR_PAD_LEFT);
+                $maxNo = str_pad($maxNo + 1, 5, "0", STR_PAD_LEFT);
                 $maxNo = strval($maxNo) . "/" . strval(date('Y'));
+
+                
+                if($users->findByCredentials(['email' => $this->request->getPost('email_pengirim')])) {
+                    $data_pengirim = $users->findByCredentials(['email' => $this->request->getPost('email_pengirim')]);
+                    $id_pengirim = $data_pengirim->id;
+                }else{
+                    $id_pengirim = 0;
+                }
 
                 $tandaTerima->insert([
                     'no_terima' => $maxNo,
+                    'id_pengirim' => $id_pengirim,
+                    'id_penerima' => auth()->id(),
                     'nama_pengirim' => $this->request->getPost('nama_pengirim'),
                     'email_pengirim' => $this->request->getPost('email_pengirim'),
                     'hp_pengirim' => $this->request->getPost('hp_pengirim'),
-                    'id_penerima' => auth()->id(),
+                    'nama_penerima' => auth()->user()->username,
+                    'email_penerima' => auth()->user()->email,
                     'keterangan' => $this->request->getPost('keterangan'),
                     'status' => '2',
                     'tanggal' => Time::now('Asia/Jakarta', 'id_ID'),
@@ -59,7 +74,7 @@ class Terima extends BaseController
                         $jumlahBarang = $this->request->getPost('jumlah_barang');
                         $satuanBarang = $this->request->getPost('satuan_barang');
 
-                        if($namaBarang[$i] != ''){
+                        if ($namaBarang[$i] != '') {
                             $detilTerima->insert([
                                 'id_terima' => $insert_id,
                                 'uraian' => $namaBarang[$i],
@@ -67,7 +82,6 @@ class Terima extends BaseController
                                 'satuan' => $satuanBarang[$i],
                             ]);
                         }
-
                     }
                 }
 
@@ -84,7 +98,7 @@ class Terima extends BaseController
                         }
                     }
                 }
-                
+
                 session()->setFlashdata('success', 'Tanda terima berhasil dibuat.');
                 return redirect('/');
             }
@@ -121,33 +135,70 @@ class Terima extends BaseController
         $dataFotoTerima = $FotoTerima->where('id_terima', $id)->findAll();
         $data['dataFotoTerima'] = $dataFotoTerima;
 
-        $id_penerima = $dataTandaTerima['id_penerima'];
-        $user  = $users->findById($id_penerima);
-        
-        $data['nama_penerima'] = $user->username;
-        $data['email_penerima'] = $user->email;
-
-        $url_code = base_url() . '/pdf/' . password_hash($id.$id_penerima, PASSWORD_BCRYPT);
+        $url_code = base_url() . '/view/' . password_hash($id . $dataTandaTerima['id_penerima'], PASSWORD_BCRYPT);
 
         $qrcode = Builder::create()
-                ->writer(new PngWriter())
-                ->writerOptions([])
-                ->data($url_code)
-                ->encoding(new Encoding('UTF-8'))
-                ->errorCorrectionLevel(new ErrorCorrectionLevelHigh())
-                ->size(300)
-                ->margin(10)
-                ->roundBlockSizeMode(new RoundBlockSizeModeMargin())
-                ->validateResult(false)
-                ->build();
+            ->writer(new PngWriter())
+            ->writerOptions([])
+            ->data($url_code)
+            ->encoding(new Encoding('UTF-8'))
+            ->errorCorrectionLevel(new ErrorCorrectionLevelHigh())
+            ->size(300)
+            ->margin(10)
+            ->roundBlockSizeMode(new RoundBlockSizeModeMargin())
+            ->validateResult(false)
+            ->build();
 
         $data['qr_code'] = $qrcode->getDataUri();
 
         return view('lihat', $data);
     }
 
-    public function pdf($id) 
+    public function pdf($id)
     {
+        $data['headerTitle'] = 'Tanda Terima';
+        $data['logButton'] = 'fa-solid fa-user';
+        $data['logUrl'] = '/profil';
 
+        $tandaTerima = model(TandaTerimaModel::class);
+        $detilTerima = model(DetilTerimaModel::class);
+        $FotoTerima = model(FotoTerimaModel::class);
+        $users = model('UserModel');
+
+        $dataTandaTerima = $tandaTerima->find($id);
+        $data['dataTandaTerima'] = $dataTandaTerima;
+
+        $dataDetilTerima = $detilTerima->where('id_terima', $id)->findAll();
+        $data['dataDetilTerima'] = $dataDetilTerima;
+
+        $dataFotoTerima = $FotoTerima->where('id_terima', $id)->findAll();
+        $data['dataFotoTerima'] = $dataFotoTerima;
+
+        $url_code = base_url() . '/view/' . password_hash($id . $dataTandaTerima['id_penerima'], PASSWORD_BCRYPT);
+
+        $qrcode = Builder::create()
+            ->writer(new PngWriter())
+            ->writerOptions([])
+            ->data($url_code)
+            ->encoding(new Encoding('UTF-8'))
+            ->errorCorrectionLevel(new ErrorCorrectionLevelHigh())
+            ->size(300)
+            ->margin(10)
+            ->roundBlockSizeMode(new RoundBlockSizeModeMargin())
+            ->validateResult(false)
+            ->build();
+
+        $data['qr_code'] = $qrcode->getDataUri();
+
+        $filename = date('y-m-d-H-i-s'). '-terima-' . $id;
+
+        $options = new Options();
+        $options->set('defaultFont', 'Arial');
+
+        $dompdf = new Dompdf($options);
+        $dompdf->loadHtml(view('pdf', $data));
+        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->render();
+        $dompdf->stream($filename);
     }
 }
