@@ -14,12 +14,12 @@ class Profil extends BaseController
 
         $dataProfil = $profil->find(auth()->id());
 
-        if($dataProfil) {
+        if ($dataProfil) {
             $data['hp'] = $dataProfil['hp'];
-        }else{
+        } else {
             $data['hp'] = '';
         }
-        
+
 
         return view('profil', $data);
     }
@@ -35,10 +35,17 @@ class Profil extends BaseController
             ])) {
                 return redirect()->back()->withInput()->with('error', $this->validator->listErrors());
             } else {
-                $profil->save([
-                    'id' => auth()->id(),
-                    'hp' => $this->request->getPost('hp')
-                ]);
+                if ($profil->find(auth()->id())) {
+                    $profil->save([
+                        'id' => auth()->id(),
+                        'hp' => $this->request->getPost('hp')
+                    ]);
+                } else {
+                    $profil->insert([
+                        'id' => auth()->id(),
+                        'hp' => $this->request->getPost('hp')
+                    ]);
+                }
 
                 session()->setFlashdata('success', 'Profil tersimpan.');
                 return redirect('profil');

@@ -115,7 +115,7 @@ class Terima extends BaseController
     public function riwayat($userId)
     {
         return DataTables::use('tanda_terima')
-            ->where(['id_penerima' => $userId])
+            ->orWhere(['id_penerima' => $userId, 'id_pengirim' => $userId])
             ->select('id, no_terima, tanggal, nama_pengirim, nama_penerima, keterangan, status')
             ->make();
     }
