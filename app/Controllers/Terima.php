@@ -25,6 +25,7 @@ class Terima extends BaseController
         $detilTerima = model(DetilTerimaModel::class);
         $FotoTerima = model(FotoTerimaModel::class);
         $users = model('UserModel');
+        $profil = model(ProfilModel::class);
 
         if ($this->request->getMethod() === 'post') {
 
@@ -51,6 +52,9 @@ class Terima extends BaseController
                     $id_pengirim = 0;
                 }
 
+                $dataProfil = $profil->find(auth()->id());
+                $hp_penerima = $dataProfil['hp'];
+
                 $tandaTerima->insert([
                     'no_terima' => $maxNo,
                     'id_pengirim' => $id_pengirim,
@@ -60,6 +64,7 @@ class Terima extends BaseController
                     'hp_pengirim' => $this->request->getPost('hp_pengirim'),
                     'nama_penerima' => auth()->user()->username,
                     'email_penerima' => auth()->user()->email,
+                    'hp_penerima' => $hp_penerima,
                     'keterangan' => $this->request->getPost('keterangan'),
                     'status' => '2',
                     'tanggal' => Time::now('Asia/Jakarta', 'id_ID'),
@@ -111,7 +116,7 @@ class Terima extends BaseController
     {
         return DataTables::use('tanda_terima')
             ->where(['id_penerima' => $userId])
-            ->select('id, no_terima, tanggal, nama_pengirim, keterangan, status')
+            ->select('id, no_terima, tanggal, nama_pengirim, nama_penerima, keterangan, status')
             ->make();
     }
 
@@ -124,7 +129,6 @@ class Terima extends BaseController
         $tandaTerima = model(TandaTerimaModel::class);
         $detilTerima = model(DetilTerimaModel::class);
         $FotoTerima = model(FotoTerimaModel::class);
-        $users = model('UserModel');
 
         $dataTandaTerima = $tandaTerima->find($id);
         $data['dataTandaTerima'] = $dataTandaTerima;
@@ -163,7 +167,6 @@ class Terima extends BaseController
         $tandaTerima = model(TandaTerimaModel::class);
         $detilTerima = model(DetilTerimaModel::class);
         $FotoTerima = model(FotoTerimaModel::class);
-        $users = model('UserModel');
 
         $dataTandaTerima = $tandaTerima->find($id);
         $data['dataTandaTerima'] = $dataTandaTerima;

@@ -16,8 +16,29 @@
                     <p class="mb-0"><?= auth()->user()->email ?></p>
                 </div>
                 <div>
-                <a name="" id="" class="btn btn-info" href="/logout" role="button">Logout</a>
+                    <a name="" id="" class="btn btn-info" href="/logout" role="button">Logout</a>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card my-4">
+    <div class="card-header">
+        Update Profil
+    </div>
+    <div class="card-body p-3">
+        <div class="row">
+            <div class="col">
+                <form action="/ubahProfil" method="post">
+                    <?= csrf_field() ?>
+                    <div class="form-group">
+                        <label for="">Handphone</label>
+                        <input type="text" class="form-control" name="hp" id="" aria-describedby="helpId" placeholder="" value="<?= $hp ?>">
+                    </div>
+                    <button type="submit" class="btn btn-info">Simpan</button>
+                    <button type="reset" class="btn btn-secondary">Reset</button>
+                </form>
             </div>
         </div>
     </div>

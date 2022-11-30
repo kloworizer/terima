@@ -41,6 +41,7 @@ $routes->get('/riwayat/(:segment)', 'Terima::riwayat/$1');
 $routes->get('/lihat/(:segment)', 'Terima::lihat/$1');
 $routes->get('/pdf/(:segment)', 'Terima::pdf/$1');
 $routes->get('/profil', 'Profil::index');
+$routes->match(['get', 'post'], '/ubahProfil', 'Profil::update');
 
 service('auth')->routes($routes);
 

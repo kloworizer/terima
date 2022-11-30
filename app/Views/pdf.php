@@ -33,9 +33,9 @@
                 </td>
                 <td>
                     <h5>Penerima</h5>
-                    <?= $nama_penerima ?><br>
-                    <?= $email_penerima ?><br>
-                    <?= $dataTandaTerima['hp_pengirim'] ?>
+                    <?= $dataTandaTerima['nama_penerima'] ?><br>
+                    <?= $dataTandaTerima['email_penerima'] ?><br>
+                    <?= $dataTandaTerima['hp_penerima'] ?>
                 </td>
             </tr>
             <tr>

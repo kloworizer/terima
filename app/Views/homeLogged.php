@@ -28,6 +28,7 @@
 					<th>No Terima</th>
 					<th>Tanggal</th>
 					<th>Nama Pengirim</th>
+					<th>Nama Penerima</th>
 					<th>Keterangan</th>
 					<th>Status</th>
 					<th></th>
@@ -58,6 +59,10 @@
 				{
 					data: 'nama_pengirim',
 					name: 'nama_pengirim'
+				},
+				{
+					data: 'nama_penerima',
+					name: 'nama_penerima'
 				},
 				{
 					data: 'keterangan',

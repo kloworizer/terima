@@ -11,7 +11,8 @@
         "tatter/frontend": "^1.0",
         "irsyadulibad/codeigniter4-datatables": "^3.0",
         "endroid/qr-code": "^4.6",
-        "dompdf/dompdf": "^2.0"
+        "dompdf/dompdf": "^2.0",
+        "tatter/alerts": "^3.1"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9",
