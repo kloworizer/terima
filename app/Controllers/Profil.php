@@ -28,7 +28,7 @@ class Profil extends BaseController
     {
         $profil = model(ProfilModel::class);
 
-        if ($this->request->getMethod() === 'post') {
+        if ($this->request->getPost()) {
 
             if (!$this->validate([
                 'hp' => 'required|numeric',
@@ -48,7 +48,7 @@ class Profil extends BaseController
                 }
 
                 session()->setFlashdata('success', 'Profil tersimpan.');
-                return redirect('profil');
+                return redirect()->to('profil');
             }
         }
     }

@@ -24,12 +24,14 @@
             </div>
         </nav>
     </div>
-    <div class="container-xl px-0 mb-5">
+    <div class="container-fluid px-0 mb-5">
         <div class="row align-items-center justify content-center mx-1 mt-4">
             <div class="col">
-                <aside>
-                    {alerts}
-                </aside>
+                <div class="container-xl">
+                    <aside>
+                        {alerts}
+                    </aside>
+                </div>
                 <!-- Main-->
                 <?= $this->renderSection('main') ?>
             </div>

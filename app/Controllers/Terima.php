@@ -27,7 +27,7 @@ class Terima extends BaseController
         $users = model('UserModel');
         $profil = model(ProfilModel::class);
 
-        if ($this->request->getMethod() === 'post') {
+        if ($this->request->getPost()) {
 
             if (!$this->validate([
                 'nama_pengirim' => 'required',
@@ -53,7 +53,12 @@ class Terima extends BaseController
                 }
 
                 $dataProfil = $profil->find(auth()->id());
-                $hp_penerima = $dataProfil['hp'];
+                
+                if ($dataProfil) {
+                    $hp_penerima = $dataProfil['hp'];
+                } else {
+                    $hp_penerima = '';
+                }
 
                 $tandaTerima->insert([
                     'no_terima' => $maxNo,
@@ -105,7 +110,7 @@ class Terima extends BaseController
                 }
 
                 session()->setFlashdata('success', 'Tanda terima berhasil dibuat.');
-                return redirect('/');
+                return redirect()->to('lihat/'.$insert_id);
             }
         }
 
