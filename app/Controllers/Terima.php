@@ -144,22 +144,6 @@ class Terima extends BaseController
         $dataFotoTerima = $FotoTerima->where('id_terima', $id)->findAll();
         $data['dataFotoTerima'] = $dataFotoTerima;
 
-        $url_code = base_url() . '/view/' . password_hash($id . $dataTandaTerima['id_penerima'], PASSWORD_BCRYPT);
-
-        $qrcode = Builder::create()
-            ->writer(new PngWriter())
-            ->writerOptions([])
-            ->data($url_code)
-            ->encoding(new Encoding('UTF-8'))
-            ->errorCorrectionLevel(new ErrorCorrectionLevelHigh())
-            ->size(300)
-            ->margin(10)
-            ->roundBlockSizeMode(new RoundBlockSizeModeMargin())
-            ->validateResult(false)
-            ->build();
-
-        $data['qr_code'] = $qrcode->getDataUri();
-
         return view('lihat', $data);
     }
 
@@ -182,7 +166,7 @@ class Terima extends BaseController
         $dataFotoTerima = $FotoTerima->where('id_terima', $id)->findAll();
         $data['dataFotoTerima'] = $dataFotoTerima;
 
-        $url_code = base_url() . '/view/' . password_hash($id . $dataTandaTerima['id_penerima'], PASSWORD_BCRYPT);
+        $url_code = base_url() . '/view/' . $id . '/' . password_hash($id . $dataTandaTerima['id_penerima'], PASSWORD_BCRYPT);
 
         $qrcode = Builder::create()
             ->writer(new PngWriter())
@@ -208,5 +192,27 @@ class Terima extends BaseController
         $dompdf->setPaper('A4', 'portrait');
         $dompdf->render();
         $dompdf->stream($filename);
+    }
+
+    public function view($id) 
+    {
+        $data['headerTitle'] = 'Tanda Terima';
+        $data['logButton'] = 'fa-solid fa-user';
+        $data['logUrl'] = '/profil';
+
+        $tandaTerima = model(TandaTerimaModel::class);
+        $detilTerima = model(DetilTerimaModel::class);
+        $FotoTerima = model(FotoTerimaModel::class);
+
+        $dataTandaTerima = $tandaTerima->find($id);
+        $data['dataTandaTerima'] = $dataTandaTerima;
+
+        $dataDetilTerima = $detilTerima->where('id_terima', $id)->findAll();
+        $data['dataDetilTerima'] = $dataDetilTerima;
+
+        $dataFotoTerima = $FotoTerima->where('id_terima', $id)->findAll();
+        $data['dataFotoTerima'] = $dataFotoTerima;
+
+        return view('view', $data);
     }
 }

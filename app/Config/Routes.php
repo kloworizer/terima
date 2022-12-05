@@ -40,6 +40,7 @@ $routes->match(['get', 'post'], '/add', 'Terima::tambah');
 $routes->get('/riwayat/(:segment)', 'Terima::riwayat/$1');
 $routes->get('/lihat/(:segment)', 'Terima::lihat/$1');
 $routes->get('/pdf/(:segment)', 'Terima::pdf/$1');
+$routes->get('/view/(:segment)/(:segment)', 'Terima::view/$1/$2');
 $routes->get('/profil', 'Profil::index');
 $routes->match(['get', 'post'], '/ubahProfil', 'Profil::update');
 
