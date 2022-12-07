@@ -166,7 +166,7 @@ class Terima extends BaseController
         $dataFotoTerima = $FotoTerima->where('id_terima', $id)->findAll();
         $data['dataFotoTerima'] = $dataFotoTerima;
 
-        $url_code = base_url() . '/view/' . $id . '/' . password_hash($id . $dataTandaTerima['id_penerima'], PASSWORD_BCRYPT);
+        $url_code = base_url() . '/view/' . $id . '/' . hash('md5', $id . $dataTandaTerima['id_penerima']);
 
         $qrcode = Builder::create()
             ->writer(new PngWriter())
